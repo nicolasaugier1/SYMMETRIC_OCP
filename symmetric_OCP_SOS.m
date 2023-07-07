@@ -1,12 +1,15 @@
 close all
 clear all
 
+% Yalmip modeling for symmetric OCP for the qubit: dual version on polynomials.
+
+
 % Parameters
 n = 3;        % Dimension of the state space
 d = 8;        % Degree of the test-function polynomials 
 
-M=3; %effective bound on the control
-E=1; %size of the drift term
+M=3; % effective bound on the control
+E=1; % size of the drift term
 alpha=atan(M/E); %angle: useful for computations
 k=2*(M^2+E^2)^(0.5); %idem
 Tf = 2*pi/k;
@@ -21,10 +24,8 @@ x = sdpvar(n,1); % the state
 u = sdpvar(1,1); % the control
 t = sdpvar(1,1); % time
 T = sdpvar(1,1); % final time 
-%xT = sdpvar(n,1);
-%x0 = sdpvar(n,1);
-%t0 = sdpvar(1,1);
 
+% Definition of symmetry-adapted monomial lists
 v=monolist([t;x;u],d/2);
 v1=[];
 v2=[];
@@ -72,6 +73,8 @@ end
 Wt=monolist([t],(d-2)/2);
 WT=monolist([T],(d-2)/2-1);
 
+% Definition of the blocks of symmetry-adapted matrices associated with SOS multipliers
+
 Qg = sdpvar(1,length(wtx));
 
 Q1 = sdpvar(length(v1)); 
@@ -86,7 +89,7 @@ Q2x = sdpvar(length(w2x));
 Qt = sdpvar(length(Wt));
 QT = sdpvar(length(WT));
 
-%fonction yalmip
+% Vector field
 f = f_qubit(x,u);
 
 % State and control constraints
