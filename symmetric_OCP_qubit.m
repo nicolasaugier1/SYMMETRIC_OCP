@@ -1,5 +1,6 @@
 % optimal control with symmetry
 % minimal time qubit
+% Gloptipoly modeling with moments
 
 clear all
 close all
